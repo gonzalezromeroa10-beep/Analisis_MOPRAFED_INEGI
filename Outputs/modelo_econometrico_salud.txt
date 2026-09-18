@@ -1,0 +1,52 @@
+--- REPORTE DE MODELADO ECONOMÉTRICO: MOTIVO SALUD (MOPRADEF) ---
+
+
+Call:
+svyglm(formula = motivo_salud_bin ~ sexo_f + edad_num + escolaridad, 
+    design = diseno_mopradef, family = quasibinomial(link = "logit"))
+
+Survey design:
+svydesign(id = ~1, weights = ~fac_ele, data = model_df)
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     1.946221   0.267810   7.267 4.35e-13 ***
+sexo_f2        -0.316679   0.084353  -3.754 0.000176 ***
+edad_num       -0.027293   0.002509 -10.878  < 2e-16 ***
+escolaridad1  -11.572718   1.021483 -11.329  < 2e-16 ***
+escolaridad2   -0.245076   0.226575  -1.082 0.279466    
+escolaridad3   -0.039349   0.228387  -0.172 0.863218    
+escolaridad4    0.887521   1.166423   0.761 0.446765    
+escolaridad5   -0.136775   0.343154  -0.399 0.690222    
+escolaridad6   -0.007670   0.236633  -0.032 0.974145    
+escolaridad7   -0.352603   0.365838  -0.964 0.335190    
+escolaridad8    0.034367   0.231930   0.148 0.882210    
+escolaridad9    0.036417   0.894215   0.041 0.967517    
+escolaridad10   0.113840   0.373922   0.304 0.760801    
+escolaridad11   1.222985   0.888102   1.377 0.168561    
+escolaridad99  -0.256461   0.634122  -0.404 0.685913    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for quasibinomial family taken to be 1.001939)
+
+Number of Fisher Scoring iterations: 10
+
+
+--- RAZONES DE MOMIOS (ODDS RATIOS) ---
+                 OddsRatio        2.5 %       97.5 %
+(Intercept)   7.002177e+00 4.141972e+00 1.183747e+01
+sexo_f2       7.285643e-01 6.175130e-01 8.595865e-01
+edad_num      9.730765e-01 9.683020e-01 9.778745e-01
+escolaridad1  9.419599e-06 1.271439e-06 6.978618e-05
+escolaridad2  7.826448e-01 5.019365e-01 1.220339e+00
+escolaridad3  9.614154e-01 6.144011e-01 1.504424e+00
+escolaridad4  2.429101e+00 2.467741e-01 2.391066e+01
+escolaridad5  8.721666e-01 4.450639e-01 1.709135e+00
+escolaridad6  9.923595e-01 6.240060e-01 1.578154e+00
+escolaridad7  7.028561e-01 3.430643e-01 1.439983e+00
+escolaridad8  1.034964e+00 6.568254e-01 1.630800e+00
+escolaridad9  1.037088e+00 1.796556e-01 5.986745e+00
+escolaridad10 1.120573e+00 5.383517e-01 2.332459e+00
+escolaridad11 3.397313e+00 5.956144e-01 1.937787e+01
+escolaridad99 7.737851e-01 2.232031e-01 2.682504e+00
