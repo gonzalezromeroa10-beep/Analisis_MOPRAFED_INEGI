@@ -42,3 +42,11 @@ analisis-mopradef-inegi/
 │   └── 06_Forest_Plot_de_Variables_Clave.R
 ├── Outputs/              # Gráficos institucionales exportados en alta resolución (.png)
 └── README.md             # Documentación principal del repositorio
+
+
+🚀 Requisitos y Reproducibilidad
+Para replicar el análisis completo en tu entorno local, instala las librerías necesarias para muestras complejas y manipulación de datos:
+
+R
+install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, survey)
