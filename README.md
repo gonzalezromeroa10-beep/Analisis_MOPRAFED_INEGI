@@ -1,52 +1,149 @@
-# Análisis Sociodemográfico y Econométrico de la Práctica Deportiva en México (MOPRADEF 2025)
+# Análisis de la práctica deportiva en México (MOPRADEF 2025)
 
-## 📌 Presentación del Proyecto
-Este repositorio contiene un pipeline analítico modular desarrollado en R para procesar, ponderar, modelar y visualizar los microdatos del **Módulo de Práctica Deportiva y Ejercicio Físico (MOPRADEF)** publicado por el INEGI. El objetivo principal es examinar las tendencias de la actividad física en México, evaluando tanto las brechas sociodemográficas descriptivas como los determinantes econométricos estructurales y las desigualdades en las motivaciones de la población.
+## 📌 Presentación del proyecto
 
----
+Este repositorio contiene un análisis reproducible en **R** de los microdatos del [Módulo de Práctica Deportiva y Ejercicio Físico (MOPRADEF) 2025](https://www.inegi.org.mx/programas/mopradef/) del INEGI.
 
-## 🛠️ Pipeline Metodológico e Infraestructura Técnica
-El procesamiento y modelado se estructuraron en scripts secuenciales bajo los estándares oficiales para el manejo de encuestas con muestras complejas:
-* **Inferencia Poblacional:** Incorporación del factor de expansión (`fac_ele`) mediante el paquete `survey` para garantizar representatividad estadística a escala nacional.
-* **Procesamiento y Modelado (`Scripts/`):** Pipeline modular que abarca desde la limpieza de microdatos hasta la estimación de modelos logísticos ponderados (`svyglm`).
-* **Visualización de Datos:** Generación de gráficos institucionales de alta resolución con `ggplot2` para la comunicación científica y la toma de decisiones.
+La pregunta principal es: **¿qué diferencias se observan en la práctica deportiva en tiempo libre según sexo, edad y educación, y qué motivos declaran quienes abandonaron o nunca practicaron deporte?**
+
+El proyecto combina estadística descriptiva, visualización de datos y un modelo de regresión logística. Desde la Economía del Desarrollo, busca identificar brechas relevantes para formular preguntas de política pública.
 
 ---
 
-## 📊 Módulos Analíticos y Principales Hallazgos
+## 🛠️ Organización del análisis
 
-### 1. Estadística Descriptiva y Distribución Demográfica
-* **Distribución Demográfica de la Práctica Deportiva:** Análisis por grupos etarios y sexo que expone el declive de la constancia física conforme avanza la edad y las brechas históricas de participación (`Outputs/distribucion_edad_genero.png`).
-* **Motivaciones Múltiples:** Desglose de reactivos (`p27_1` a `p27_8`) para dimensionar el peso de la prevención clínica, el control de peso y la socialización (`Outputs/motivos_practica_deportiva.png`).
+| Script | Función |
+| --- | --- |
+| `01_Carga_y_Limpieza_MOPRADEF.R` | Carga los microdatos, valida las variables y crea la base analítica. |
+| `02_Analisis_Descriptivo_MOPRADEF.R` | Calcula tasas ponderadas y tablas de motivos declarados. |
+| `03_Graficos_Descriptivos_MOPRADEF.R` | Genera los gráficos de tasas y motivos. |
+| `04_Modelado_MOPRADEF.R` | Estima una regresión logística y genera un gráfico de *odds ratios*. |
+| `05_Desigualdades_y_Tiempo_MOPRADEF.R` | Examina el cruce entre sexo y educación, así como motivos relacionados con trabajo y cuidados. |
 
-### 2. Modelado Econométrico y Análisis Predictivo
-* **Determinantes del Motivo "Salud":** Modelo logístico ponderado para aislar el efecto de la edad, el sexo y la escolaridad sobre la probabilidad de buscar la salud preventiva.
-* **Brecha de Género y Ciclo de Vida:** Confirmación de un Odds Ratio adverso para las mujeres y un declive sistemático por la edad (`Outputs/probabilidades_salud_edad_sexo.png`).
-* **Forest Plot de Variables Clave:** Gráfico optimizado que aísla los efectos estructurales robustos frente al dintel de referencia (`Outputs/forest_plot_variables_clave.png`).
-
-### 3. Segmentación Profunda y Desigualdad Educativa
-* **Cruces por Nivel de Escolaridad:** Análisis desagregado de cómo varían las motivaciones y las barreras de práctica deportiva a lo largo de los estratos educativos, evaluando la estratificación social en el acceso al bienestar físico.
+Los scripts emplean el factor de expansión de la persona elegida (`fac_ele`), la unidad primaria de muestreo (`upm_dis`) y el estrato (`est_dis`) para incorporar el diseño de la encuesta.
 
 ---
 
-## 📂 Estructura del Repositorio
+## 📂 Estructura del proyecto
+
 ```text
-analisis-mopradef-inegi/
-│
-├── Data/                 # Archivos de microdatos originales (INEGI)
-├── Scripts/              # Pipeline modular en R:
-│   ├── 01_Limpieza.R
-│   ├── ...
-│   ├── 04_Modelado_Estadistico_Econometrico.R
-│   ├── 05_Segmentacion_Profunda_y_Desigualdad.R
-│   └── 06_Forest_Plot_de_Variables_Clave.R
-├── Outputs/              # Gráficos institucionales exportados en alta resolución (.png)
-└── README.md             # Documentación principal del repositorio
+Data/
+  mopradef_bd_2025_sav/
+    MOPRADEF.sav
+  analisis_df.rds
 
+Scripts/
+  01_Carga_y_Limpieza_MOPRADEF.R
+  02_Analisis_Descriptivo_MOPRADEF.R
+  03_Graficos_Descriptivos_MOPRADEF.R
+  04_Modelado_MOPRADEF.R
+  05_Desigualdades_y_Tiempo_MOPRADEF.R
 
-🚀 Requisitos y Reproducibilidad
-Para replicar el análisis completo en tu entorno local, instala las librerías necesarias para muestras complejas y manipulación de datos:
+Output/
+  02_*.csv
+  03_*.png
+  04_*.csv / *.png / *.pdf / *.rds
+  05_*.csv / *.png
+```
 
-R
-install.packages("pacman")
-pacman::p_load(tidyverse, ggplot2, survey)
+`analisis_df.rds` es generado por el script 01. Los archivos de `Output/` se generan al ejecutar los análisis.
+
+---
+
+## ▶️ Cómo reproducir el proyecto
+
+Abre el archivo `.Rproj` desde la carpeta principal del proyecto. Coloca `MOPRADEF.sav` en `Data/mopradef_bd_2025_sav/` e instala los paquetes necesarios:
+
+```r
+install.packages(c("haven", "dplyr", "survey", "ggplot2", "readr", "scales"))
+```
+
+Después, ejecuta los scripts en este orden:
+
+```r
+source("Scripts/01_Carga_y_Limpieza_MOPRADEF.R")
+source("Scripts/02_Analisis_Descriptivo_MOPRADEF.R")
+source("Scripts/03_Graficos_Descriptivos_MOPRADEF.R")
+source("Scripts/04_Modelado_MOPRADEF.R")
+source("Scripts/05_Desigualdades_y_Tiempo_MOPRADEF.R")
+```
+
+Si R no encuentra `Data/`, comprueba la carpeta activa con `getwd()`.
+
+---
+
+## 📊 Resultados descriptivos
+
+La base contiene **4.240 personas elegidas**. En la muestra sin ponderar, **1.738** declararon que practican deporte o ejercicio físico en su tiempo libre y **2.502** que no practican. Las tasas presentadas en los gráficos se estiman **con ponderación**, por lo que no deben calcularse dividiendo directamente esos conteos.
+
+### Práctica deportiva por grupo
+
+La siguiente figura presenta las tasas estimadas por sexo, edad y educación. Cada punto indica un porcentaje y la línea a su alrededor representa su intervalo de confianza del 95 %.
+
+![Tasas de práctica deportiva por grupo](Output/03_tasas_por_grupo.png)
+
+### Motivos declarados para abandonar la práctica
+
+Este gráfico se refiere únicamente a quienes **practicaron anteriormente y abandonaron**. Los porcentajes se calculan dentro de las respuestas válidas de hombres y mujeres por separado.
+
+![Motivos declarados para abandonar la práctica](Output/03_motivos_abandono.png)
+
+### Motivos declarados por quienes nunca practicaron
+
+Este segundo gráfico corresponde a quienes **nunca han practicado**. Se presenta por separado porque responde a otra pregunta de la encuesta y tiene un denominador distinto.
+
+![Motivos declarados por quienes nunca practicaron](Output/03_motivos_nunca_practico.png)
+
+---
+
+## 📈 Asociaciones ajustadas
+
+El script 04 estima una regresión logística que relaciona la práctica deportiva con sexo, edad y educación. El siguiente *forest plot* muestra los **odds ratios ajustados** y sus intervalos de confianza del 95 %.
+
+La línea vertical en **1** representa ausencia de diferencia respecto al grupo de referencia. Un punto a la izquierda indica menores *odds* y uno a la derecha indica mayores *odds*. **Un odds ratio no es un porcentaje de personas que practican deporte.**
+
+![Odds ratios ajustados de práctica deportiva](Output/04_forest_plot.png)
+
+---
+
+## 🔎 Sexo, educación y uso del tiempo
+
+El script 05 profundiza en dos preguntas:
+
+1. ¿Cómo varía la práctica deportiva cuando se observan **sexo y educación conjuntamente**?
+2. ¿Con qué frecuencia se declara la falta de tiempo por **trabajo o estudio** o por **cuidados** como motivo principal?
+
+![Práctica deportiva por sexo y educación](Output/05_practica_sexo_educacion.png)
+
+![Motivos relacionados con trabajo y cuidados](Output/05_motivos_tiempo_por_sexo.png)
+
+Las tablas CSV incluyen tamaños de muestra e intervalos de confianza. Antes de interpretar una diferencia pequeña o un subgrupo, conviene revisar esos datos.
+
+---
+
+## 🏛️ Lectura para política pública
+
+El análisis permite **identificar grupos y motivos que merecen atención**, pero no demuestra que una característica cause la práctica o la falta de práctica deportiva.
+
+Las diferencias observadas pueden orientar preguntas para el diseño de políticas: ¿los horarios de las actividades son compatibles con el trabajo y el estudio?, ¿qué obstáculos enfrentan quienes realizan tareas de cuidado?, ¿cambian las necesidades entre grupos educativos?
+
+Los motivos de la encuesta son **respuestas declaradas**. Para comprender mejor las experiencias detrás de esas respuestas sería útil complementar los resultados con entrevistas u otros métodos cualitativos. Para afirmar que una intervención funciona se necesitaría, además, una evaluación específica.
+
+---
+
+## ⚠️ Alcances y limitaciones
+
+- Se analiza un levantamiento de **2025**; los resultados no muestran cambios a lo largo del tiempo.
+- El resultado principal es la **práctica declarada de deporte o ejercicio en tiempo libre**. No equivale automáticamente a cumplir recomendaciones de actividad física.
+- Las respuestas «No sabe» se excluyen de los gráficos de motivos; los porcentajes se calculan entre respuestas válidas.
+- `p3` estudia el **abandono** y `p4` la **ausencia de práctica previa**. Sus porcentajes no comparten el mismo denominador.
+- Las estimaciones del modelo son **asociaciones observacionales**, no efectos causales.
+- Los análisis de grupos pequeños deben interpretarse con cautela.
+
+---
+
+## 📚 Fuente
+
+**INEGI.** [Módulo de Práctica Deportiva y Ejercicio Físico (MOPRADEF) 2025](https://www.inegi.org.mx/programas/mopradef/).
+
+El procesamiento de los microdatos, las agrupaciones de variables, los gráficos y la interpretación de este repositorio son elaboración propia; **no son resultados oficiales del INEGI**.
