@@ -147,3 +147,4 @@ Los motivos de la encuesta son **respuestas declaradas**. Para comprender mejor 
 **INEGI.** [Módulo de Práctica Deportiva y Ejercicio Físico (MOPRADEF) 2025](https://www.inegi.org.mx/programas/mopradef/).
 
 El procesamiento de los microdatos, las agrupaciones de variables, los gráficos y la interpretación de este repositorio son elaboración propia; **no son resultados oficiales del INEGI**.
+Arturo Gonzalez Romero
