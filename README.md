@@ -5,6 +5,7 @@
 Este repositorio contiene un análisis reproducible en **R** de los microdatos del [Módulo de Práctica Deportiva y Ejercicio Físico (MOPRADEF) 2025](https://www.inegi.org.mx/programas/mopradef/) del INEGI.
 
 La pregunta principal es: **¿Cómo varía la práctica deportiva según el sexo, la edad y la educación en México, y qué motivos declaran quienes la abandonaron o nunca la iniciaron?**
+«En este estudio, práctica deportiva se refiere al deporte o ejercicio realizado en el tiempo libre, según la pregunta p1 del MOPRADEF»
 
 El proyecto combina estadística descriptiva, visualización de datos y un modelo de regresión logística. Desde la Economía del Desarrollo, busca identificar brechas relevantes para formular preguntas de política pública.
 
